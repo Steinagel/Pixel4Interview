@@ -32,6 +32,13 @@
       socket.on('draw', function(msg){
       $(`#${msg.td_id}`).css('background-color', msg.color);
       });
+      socket.on('chat', function(msg){
+
+      });
+      $('form').submit(function(){
+        //obj = valor do input do texto
+        socket.emit('chat', obj);
+      });
     </script>
 </body>
 </html>

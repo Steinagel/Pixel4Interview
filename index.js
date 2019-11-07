@@ -14,6 +14,9 @@ io.on('connection', function(socket){
   socket.on('draw', function(msg){
     io.emit('draw', msg);
   });
+  socket.on('chat', function(msg){
+    io.emit('chat', msg);
+  });
 });
 
 http.listen(port, function(){

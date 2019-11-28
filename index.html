@@ -8,9 +8,6 @@
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 </head>
 <body>
-  <div class="image">
-    
-  </div>
   <div>
     <h1>Pixel4Interview</h1>
     <h2>Choose Grid Size</h2>
@@ -29,6 +26,52 @@
     <div id="table-area">
       <table id="pixelCanvas"></table>
     </div>
+    <div class="chat_image">
+      <div class="timer">
+        <p id="timer_text"></p> 
+          <script> 
+          var limit = 15;
+          var deadline = new Date();
+
+          var minutes = limit+deadline.getMinutes();
+          if(minutes>60){
+            var hour = deadline.getHours();
+            hour += minutes%60;
+            minutes = minutes-((minutes%60)*60);
+            deadline.setHours(hour);
+            console.log(minutes, hour);
+          }
+          deadline.setMinutes(minutes);
+
+          var x = setInterval(function() {
+            var now = new Date(); 
+            var t = deadline.getTime() - now.getTime(); 
+            var days = Math.floor(t / (1000 * 60 * 60 * 24)); 
+            var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60)); 
+            var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60)); 
+            var seconds = Math.floor((t % (1000 * 60)) / 1000); 
+            console.log(now);
+            document.getElementById("timer_text").innerHTML = days + "d "  
+            + hours + "h " + minutes + "m " + seconds + "s "; 
+                if (t <= 0) {
+                    clearInterval(x); 
+                    document.getElementById("timer_text").innerHTML = "EXPIRED"; 
+                }
+          }, 1000); 
+          </script> 
+      </div>
+      <div class="image">
+        <img id="image_div" src="" alt="">
+
+        <script>
+          var file_id = Math.floor(Math.random() * 3) + 1;
+          document.getElementById("image_div").src = "./images/"+file_id+".jpg"
+        </script>
+      </div>
+      <div class="chat">
+    
+      </div>
+    </div>
     <script src="/static/designs.js"></script>
     <script>
       var socket = io();
@@ -44,9 +87,6 @@
         socket.emit('chat', obj);
       });
     </script>
-  </div>
-  <div class="timer">
-
   </div>
 </body>
 </html>

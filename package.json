@@ -4,7 +4,9 @@
   "description": "my first socket.io app",
   "dependencies": {
     "express": "^4.15.2",
-    "socket.io": "^1.7.3"
+    "fs": "0.0.1-security",
+    "socket.io": "^1.7.3",
+    "yarn": "^1.19.2"
   },
   "scripts": {
     "dev": "nodemon index.js",

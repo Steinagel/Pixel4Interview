@@ -1,6 +1,6 @@
 $(document).ready(function (){
-	var inputHeight = 12;
-	var inputWidth= 30;
+	var inputHeight = 50;
+	var inputWidth= 160;
 
 	$('td').remove();
 	$('tr').remove();

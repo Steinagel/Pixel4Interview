@@ -28,11 +28,11 @@ table {
 }
 
 tr {
-    height: 20px;
+    height: 10px;
 }
 
 td {
-    width: 20px;
+    width: 10px;
 }
 
 input[type=number] {
@@ -72,10 +72,14 @@ input[type=number] {
 #image_div {
     position: relative;
     float: left;
-
-    width: 90%;
+    width: 100%;
     padding: 3% 5%;
-    height: 90%;
+    height: 100%;
     object-fit: cover;
     background-size:contain;
 }
+
+#messages { list-style-type: none; margin: 0; padding: 0; }
+#messages li { padding: 5px 10px; }
+#messages li:nth-child(odd) { background: #eee; }
+#messages { margin-bottom: 40px }

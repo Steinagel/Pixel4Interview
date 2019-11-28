@@ -5,6 +5,7 @@
   "dependencies": {
     "express": "^4.15.2",
     "fs": "0.0.1-security",
+    "moment": "^2.24.0",
     "socket.io": "^1.7.3",
     "yarn": "^1.19.2"
   },

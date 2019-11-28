@@ -3,73 +3,50 @@
 <head>
     <title>Pixel Team!</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monoton">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 </head>
 <body>
-  <div>
-    <h1>Pixel4Interview</h1>
-    <h2>Choose Grid Size</h2>
-    <form id="sizePicker">
-        Grid Height(max 30):
-        <input type="number" id="inputHeight" name="height" min="1" value="1">
-        Grid Width(max 50):
-        <input type="number" id="inputWeight" name="width" min="1" value="1">
-        <input type="submit">
-    </form>
-
-    <h2>Pick A Color</h2>
-    <input type="color" id="colorPicker">
-
-    <h2>Design Canvas</h2>
-    <div id="table-area">
-      <table id="pixelCanvas"></table>
+  <div class="">
+    <div class="main">
+      <h1>Pixel4Interview</h1>
+      <h2>Choose Grid Size</h2>
+      <form id="sizePicker">
+          Grid Height(max 30):
+          <input type="number" id="inputHeight" name="height" min="1" value="1">
+          Grid Width(max 50):
+          <input type="number" id="inputWeight" name="width" min="1" value="1">
+          <input type="submit">
+      </form>
+  
+      <h2>Pick A Color</h2>
+      <input type="color" id="colorPicker">
+  
+      <h2>Design Canvas</h2>
+      <div id="table-area">
+        <table id="pixelCanvas"></table>
+      </div>
     </div>
     <div class="chat_image">
       <div class="timer">
         <p id="timer_text"></p> 
-          <script> 
-          var limit = 15;
-          var deadline = new Date();
-
-          var minutes = limit+deadline.getMinutes();
-          if(minutes>60){
-            var hour = deadline.getHours();
-            hour += minutes%60;
-            minutes = minutes-((minutes%60)*60);
-            deadline.setHours(hour);
-            console.log(minutes, hour);
-          }
-          deadline.setMinutes(minutes);
-
-          var x = setInterval(function() {
-            var now = new Date(); 
-            var t = deadline.getTime() - now.getTime(); 
-            var days = Math.floor(t / (1000 * 60 * 60 * 24)); 
-            var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60)); 
-            var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60)); 
-            var seconds = Math.floor((t % (1000 * 60)) / 1000); 
-            console.log(now);
-            document.getElementById("timer_text").innerHTML = days + "d "  
-            + hours + "h " + minutes + "m " + seconds + "s "; 
-                if (t <= 0) {
-                    clearInterval(x); 
-                    document.getElementById("timer_text").innerHTML = "EXPIRED"; 
-                }
-          }, 1000); 
-          </script> 
       </div>
       <div class="image">
         <img id="image_div" src="" alt="">
 
         <script>
           var file_id = Math.floor(Math.random() * 3) + 1;
-          document.getElementById("image_div").src = "./images/"+file_id+".jpg"
+          document.getElementById("image_div").src = "./static/images/"+file_id+".jpg"
         </script>
       </div>
       <div class="chat">
-    
+        <ul id="messages"></ul>
+        <form action="" style="position: absolute;bottom: 0;width: 33%;padding: 5px;">
+          <input id="m" autocomplete="off" style="float: left;width: 90%;"/>
+          <button style="float: right; width: 9%;">Send</button>
+        </form>
       </div>
     </div>
     <script src="/static/designs.js"></script>
@@ -79,12 +56,18 @@
       socket.on('draw', function(msg){
       $(`#${msg.td_id}`).css('background-color', msg.color);
       });
-      socket.on('chat', function(msg){
-
-      });
       $('form').submit(function(){
-        //obj = valor do input do texto
-        socket.emit('chat', obj);
+        socket.emit('chat', $('#m').val());
+        $('#m').val('');
+        return false;
+      });
+      socket.on('chat', function(msg){
+        $('#messages').append($('<li>').text(msg));
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+      socket.on('time',function(msg){
+        $('#timer_text').text("");
+        $('#timer_text').text(msg);
       });
     </script>
   </div>
